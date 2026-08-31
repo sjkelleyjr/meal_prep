@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gather — meal prep, gathered</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#"><span class="brand-mark">✦</span><span>gather</span></a>
+    <nav>
+      <button class="nav-item active" data-view="plan"><span>▦</span> This week <b id="week-count">0</b></button>
+      <button class="nav-item" data-view="recipes"><span>◈</span> Recipe library <b id="recipe-count">0</b></button>
+      <button class="nav-item" data-view="ingredients"><span>◌</span> Shopping list <b id="shopping-count">0</b></button>
+    </nav>
+    <div class="sidebar-bottom"></div>
+  </aside>
+  <main>
+    <section id="plan-view" class="view active-view">
+      <div class="section-heading"><div><h2>This week <span id="selected-label">0 selected</span></h2><p>Tap a day to pick a recipe, or drag one in.</p></div></div>
+      <div id="week-grid" class="week-grid"></div>
+      <div class="section-heading"><div><h2>Your recipes</h2><p>Pick from your library to build the week.</p></div><button class="outline-btn" id="open-add">＋ Add recipe</button></div>
+      <div class="library-tools"><div class="search"><span>⌕</span><input id="plan-search-input" placeholder="Search recipes or ingredients..."></div></div>
+      <div id="recipe-grid" class="recipe-grid"></div>
+      <section class="cart-card"><div class="cart-icon">🛒</div><div class="cart-copy"><div class="cart-top"><span class="eyebrow">SHOPPING LIST</span><span class="saved-pill">✦ Choose items yourself</span></div><h2>Your list, your choices.</h2><p id="cart-summary">Review your ingredients, then open a Walmart search for each item.</p><div class="ingredient-preview" id="ingredient-preview"></div></div><div class="cart-action"><div><strong id="item-count">18</strong><small>items</small></div><button class="walmart-btn" id="cart-button"><span>W</span> Review shopping list <b>→</b></button><small class="secure">You choose each item on Walmart</small></div></section>
+    </section>
+    <section id="recipes-view" class="view"><div class="page-title"><div><p class="eyebrow">YOUR COLLECTION</p><h1>Recipe library</h1><p class="subhead">The meals you’ve loved, saved for later.</p></div><button class="primary-btn" id="open-add-library">＋ Add recipe</button></div><div class="library-tools"><div class="search"><span>⌕</span><input id="search-input" placeholder="Search recipes or ingredients..."></div><div class="filters"><button class="filter active" data-filter="all">All recipes</button><button class="filter" data-filter="quick">Under 30 min</button><button class="filter" data-filter="saved">Most cooked</button></div></div><div id="library-grid" class="recipe-grid library-grid"></div></section>
+    <section id="ingredients-view" class="view"><div class="page-title"><div><p class="eyebrow">THIS WEEK</p><h1>Shopping list</h1><p class="subhead">Review your list, then search for each item and choose what to buy.</p></div><button class="primary-btn" id="cart-submit">Start with first item <span>→</span></button></div><div id="cart-list" class="cart-list page-list"></div><button class="add-row-btn" id="add-cart-row">＋ Add item</button></section>
+    <section id="detail-view" class="view"><button class="back-btn" id="back-to-library">← Back to recipes</button><div id="recipe-detail"></div></section>
+  </main>
+  <div id="day-picker" class="day-picker" hidden></div>
+  <div class="toast" id="toast"></div>
+  <dialog id="add-dialog"><form method="dialog" id="recipe-form"><button class="dialog-close" type="button" value="cancel" aria-label="Close">×</button><p class="eyebrow">NEW RECIPE</p><h2>Add to your collection</h2><p class="dialog-copy">Keep it simple — you can always fill in more details later.</p><label>Recipe name<input name="name" required placeholder="e.g. Sunday tomato pasta"></label><label>Source or cookbook<input name="source" placeholder="e.g. Half Baked Harvest"></label><label>Cookbook page<input name="page" type="number" min="1" placeholder="e.g. 142"></label><label>Tags <input name="tags" placeholder="e.g. pasta, bacon"></label><label>Ingredients <textarea name="ingredients" required placeholder="chicken thighs&#10;rice&#10;lemon"></textarea></label><button class="primary-btn" type="submit">Save recipe <span>→</span></button></form></dialog>
+  <div class="access-gate" id="access-gate"><div class="access-card"><span class="brand-mark">✦</span><h2>Welcome to gather</h2><p>Enter your shared kitchen passcode to view and add recipes together.</p><form id="access-form"><input id="access-code" type="password" placeholder="Shared passcode" required><button class="primary-btn" type="submit">Enter kitchen <span>→</span></button><small id="access-error"></small></form></div></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+</body>
+</html>
