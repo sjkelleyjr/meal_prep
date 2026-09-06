@@ -31,3 +31,24 @@ create policy "Anyone can edit recipes" on public.recipes for update to anon, au
 
 alter table public.recipes replica identity full;
 alter publication supabase_realtime add table public.recipes;
+
+create table if not exists public.weekly_plans (
+  id text primary key,
+  assignments jsonb not null default '{}'::jsonb,
+  manual_ingredients jsonb not null default '[]'::jsonb,
+  updated_at timestamptz not null default now()
+);
+
+alter table public.weekly_plans enable row level security;
+
+drop policy if exists "Anyone can view weekly plans" on public.weekly_plans;
+create policy "Anyone can view weekly plans" on public.weekly_plans for select to anon, authenticated using (true);
+
+drop policy if exists "Anyone can create weekly plans" on public.weekly_plans;
+create policy "Anyone can create weekly plans" on public.weekly_plans for insert to anon, authenticated with check (true);
+
+drop policy if exists "Anyone can edit weekly plans" on public.weekly_plans;
+create policy "Anyone can edit weekly plans" on public.weekly_plans for update to anon, authenticated using (true) with check (true);
+
+alter table public.weekly_plans replica identity full;
+alter publication supabase_realtime add table public.weekly_plans;
