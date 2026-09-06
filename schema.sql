@@ -36,8 +36,11 @@ create table if not exists public.weekly_plans (
   id text primary key,
   assignments jsonb not null default '{}'::jsonb,
   manual_ingredients jsonb not null default '[]'::jsonb,
+  locked boolean not null default false,
   updated_at timestamptz not null default now()
 );
+
+alter table public.weekly_plans add column if not exists locked boolean not null default false;
 
 alter table public.weekly_plans enable row level security;
 
